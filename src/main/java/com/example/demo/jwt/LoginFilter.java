@@ -40,10 +40,11 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     //검증 성공
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
-
+        System.out.println("검증 성공");
     }
     //검증 실패
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
+        System.out.println("검증 실패");
     }
 }
