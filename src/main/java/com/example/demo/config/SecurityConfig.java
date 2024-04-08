@@ -1,5 +1,6 @@
 package com.example.demo.config;
 
+import com.example.demo.jwt.JWTUtil;
 import com.example.demo.jwt.LoginFilter;
 import lombok.RequiredArgsConstructor;
 import org.apache.catalina.User;
@@ -19,6 +20,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class SecurityConfig {
     private final AuthenticationConfiguration authenticationConfiguration;
+    private final JWTUtil jwtUtil;
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception{
         return configuration.getAuthenticationManager();
@@ -49,7 +51,7 @@ public class SecurityConfig {
                 );
         //필터 추가
         http
-                .addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration) ), UsernamePasswordAuthenticationFilter.class);
+                .addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration),jwtUtil ), UsernamePasswordAuthenticationFilter.class);
 
         //세션 설정(JWT는 세션을 stateless)
         http
