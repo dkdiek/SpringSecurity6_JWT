@@ -1,5 +1,6 @@
 package com.example.demo.config;
 
+import com.example.demo.jwt.JWTFilter;
 import com.example.demo.jwt.JWTUtil;
 import com.example.demo.jwt.LoginFilter;
 import lombok.RequiredArgsConstructor;
@@ -49,6 +50,9 @@ public class SecurityConfig {
                         .requestMatchers("/admin").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 );
+        //로그인 필터 앞에 jwtfilter추가
+        http
+                .addFilterBefore(new JWTFilter(jwtUtil), LoginFilter.class);
         //필터 추가
         http
                 .addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration),jwtUtil ), UsernamePasswordAuthenticationFilter.class);
